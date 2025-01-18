@@ -29,7 +29,8 @@ Menu
 
 Database Design
 
-(https://prod-files-secure.s3.us-west-2.amazonaws.com/06b8ebad-0ed4-4870-8c32-963c8f1e4396/fb688641-1ebc-4b94-a39f-ad63acb952d7/image.png)
+![image](https://github.com/user-attachments/assets/0ebb7fca-6084-42c8-8abf-77c769b592a4)
+
 
 Tech Stack
 
