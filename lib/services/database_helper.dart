@@ -5,7 +5,9 @@ import 'package:path/path.dart' as p;
 class DatabaseHelper {
   static const dbName = 'taking_note.db';
   static const dbVersion = 1;
-  static const tableName = 'note_table';
+  static const noteTable = 'note_table';
+  static const fileTable = 'file_table';
+  static const todoTable = 'todo_table';
 
   static const columnId = '_id';
   static const columnTitle = 'title';
@@ -33,18 +35,44 @@ class DatabaseHelper {
     final dbPath = await getApplicationDocumentsDirectory();
     return openDatabase(
       p.join(dbPath.path, dbName),
-      onCreate: (db, version) {
-        return db.execute('''CREATE TABLE $tableName (
+      onCreate: (db, version) async {
+        //Create Note Table
+        await db.execute('''CREATE TABLE $noteTable (
           $columnId INTEGER PRIMARY KEY AUTOINCREMENT, 
-          $columnTitle TEXT,
+          $columnTitle TEXT NOT NULL,
           $columnContent TEXT,
           $columnDateCreated INTEGER,
           $columnDateUpdated INTEGER,
           $columnNoteType TEXT,
           $columnPosition INTEGER
           )''');
+
+        // Create File Table
+        await db.execute('''
+          CREATE TABLE file_table (
+          _id INTEGER PRIMARY KEY AUTOINCREMENT,
+          file_name TEXT NOT NULL,
+          created_at INTEGER,
+          updated_at INTEGER
+          )''');
+
+        //Create Todo Table
+        await db.execute('''
+          CREATE TABLE todo_table (
+          _id INTEGER PRIMARY KEY AUTOINCREMENT,
+          file_id INTEGER NOT NULL,
+          title TEXT NOT NULL,
+          desc TEXT,
+          is_completed INTEGER NOT NULL DEFAULT 0,
+          created_at INTEGER,
+          updated_at INTEGER,
+          FOREIGN KEY (file_id) REFERENCES file_table (_id) ON DELETE CASCADE
+          )''');
       },
       version: dbVersion,
+      onOpen: (db) async {
+        await db.execute('PRAGMA foreign_keys = ON');
+      },
     );
   }
 

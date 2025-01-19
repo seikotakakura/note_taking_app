@@ -12,24 +12,24 @@ class DatabaseService {
   }
 
   //add note data
-  Future<int> addNote(NoteModel note) async {
+  Future<int> addNote({required NoteModel note}) async {
     final db = await _dbHelper.database;
     return await db.insert('note_table', note.toNoteMap());
   }
 
   //update note data
-  Future<int> updateNote(NoteModel note) async {
+  Future<int> updateNote({required NoteModel note, required int noteId}) async {
     final db = await _dbHelper.database;
     return await db.update(
       'note_table',
       note.toNoteMap(),
       where: '_id = ?',
-      whereArgs: [note.id],
+      whereArgs: [noteId],
     );
   }
 
   //delete note data
-  Future<int> deleteNoteDataById(int id) async {
+  Future<int> deleteNoteDataById({required int id}) async {
     final db = await _dbHelper.database;
     return await db.delete(
       'note_table',
