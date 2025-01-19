@@ -29,10 +29,11 @@ Menu
 
 Database Design
 
-(https://prod-files-secure.s3.us-west-2.amazonaws.com/06b8ebad-0ed4-4870-8c32-963c8f1e4396/fb688641-1ebc-4b94-a39f-ad63acb952d7/image.png)
+![image](https://github.com/user-attachments/assets/0ebb7fca-6084-42c8-8abf-77c769b592a4)
 
-Tech Stack
 
-1. Flutter 3.7.xx
-2. SQFlite 2.4.1
-3. shared_preferences: ^2.3.5
+Dependency
+
+1. sqflite: ^2.4.1
+2. sqflite_common_ffi: ^2.3.4+4
+3. path_provider: ^2.1.5
