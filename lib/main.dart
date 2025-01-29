@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:note_taking_app/screens/quote_page.dart';
-import 'package:note_taking_app/utils/nav_provider.dart';
+import 'package:note_taking_app/providers/nav_provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -16,7 +17,7 @@ class MyApp extends ConsumerWidget {
     final router = ref.watch(routerProvider);
     return MaterialApp.router(
       title: 'Note Taking App',
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,

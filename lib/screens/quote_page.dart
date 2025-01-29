@@ -21,7 +21,7 @@ class QuotePage extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '"${quote.content}"',
+                  '"${quote.quote}"',
                   style: const TextStyle(
                     fontSize: 18,
                     fontStyle: FontStyle.italic,
