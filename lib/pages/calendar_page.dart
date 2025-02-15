@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:note_taking_app/data/dummy_data.dart';
 import 'package:note_taking_app/providers/calendar_provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarPage extends ConsumerWidget {
+  const CalendarPage({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final calendarState = ref.watch(calendarProvider);
+    final dummyData = DummyData();
 
     return Scaffold(
       backgroundColor: Color(0xFFf2f3f7),
@@ -150,8 +154,87 @@ class CalendarPage extends ConsumerWidget {
                 ),
               ),
             ),
-
+            SizedBox(height: 8.0),
             /**Task Schedule */
+            Expanded(
+              child: ListView.builder(
+                itemCount: dummyData.eventDummy.length,
+                padding: EdgeInsets.only(bottom: 80.0),
+                itemBuilder: (context, index) {
+                  return DateFormat.yMd().format(
+                              dummyData.eventDummy[index].eventStart ??
+                                  DateTime.now()) !=
+                          DateFormat.yMd().format(calendarState.focusedDay)
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Container(
+                            padding: EdgeInsets.all(6.0),
+                            height: 65.0,
+                            alignment: Alignment.topLeft,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8.0),
+                              border: Border.all(),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withValues(alpha: 0.3),
+                                  spreadRadius: 2,
+                                  blurRadius: 7,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 3.0,
+                                  decoration: BoxDecoration(
+                                      color: Colors.amber,
+                                      borderRadius: BorderRadius.circular(2.0)),
+                                ),
+                                SizedBox(width: 4.0),
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: Text(
+                                          dummyData.eventDummy[index].title,
+                                          style: TextStyle(
+                                            fontFamily: 'Poppins',
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          textAlign: TextAlign.left,
+                                        ),
+                                      ),
+                                      SizedBox(height: 2.0),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: Text(
+                                          dummyData.eventDummy[index].desc,
+                                          style: TextStyle(
+                                            fontFamily: 'Poppins',
+                                            fontSize: 10.0,
+                                          ),
+                                          textAlign: TextAlign.left,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                },
+              ),
+            )
           ],
         ),
       ),

@@ -4,19 +4,19 @@ class NoteModel {
   final int? id;
   final String title;
   final String content;
-  final DateTime? dateCreated;
-  final DateTime? dateUpdated;
-  final NoteType noteType;
-  final int position;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  // final NoteType noteType;
+  // final int position;
 
   NoteModel({
     this.id,
     required this.title,
     required this.content,
-    this.dateCreated,
-    this.dateUpdated,
-    this.noteType = NoteType.textNote,
-    required this.position,
+    this.createdAt,
+    this.updatedAt,
+    // this.noteType = NoteType.textNote,
+    // required this.position,
   });
 
   //conversion from Map to Model
@@ -25,10 +25,10 @@ class NoteModel {
       id: map['_id'],
       title: map['title'],
       content: map['content'],
-      dateCreated: DateTime.fromMillisecondsSinceEpoch(map['date_created']),
-      dateUpdated: map['date_updated'] == null ? DateTime.now() : DateTime.fromMillisecondsSinceEpoch(map['date_updated']),
-      noteType: map['note_type'] == 'Text Note' ? NoteType.textNote : map['note_type'] == 'Checklist' ? NoteType.checklist : NoteType.voiceNote,
-      position: map['position'],
+      createdAt: DateTime.fromMillisecondsSinceEpoch(map['created_at']),
+      updatedAt: map['updated_at'] == null ? DateTime.now() : DateTime.fromMillisecondsSinceEpoch(map['updated_at']),
+      // noteType: map['note_type'] == 'Text Note' ? NoteType.textNote : map['note_type'] == 'Checklist' ? NoteType.checklist : NoteType.voiceNote,
+      // position: map['position'],
     );
   }
 
@@ -38,10 +38,10 @@ class NoteModel {
       '_id': id,
       'title': title,
       'content': content,
-      'date_created': dateCreated == null ? DateTime.now().millisecondsSinceEpoch : dateCreated?.millisecondsSinceEpoch,
-      'date_updated': dateUpdated == null ? DateTime.now().millisecondsSinceEpoch : dateUpdated?.millisecondsSinceEpoch,
-      'note_type': noteType == NoteType.textNote ? 'Text Note' : noteType == NoteType.checklist ? 'Checklist' : 'Voice Note',
-      'position': position,
+      'crated_at': createdAt == null ? DateTime.now().millisecondsSinceEpoch : createdAt?.millisecondsSinceEpoch,
+      'updated_at': updatedAt == null ? DateTime.now().millisecondsSinceEpoch : updatedAt?.millisecondsSinceEpoch,
+      // 'note_type': noteType == NoteType.textNote ? 'Text Note' : noteType == NoteType.checklist ? 'Checklist' : 'Voice Note',
+      // 'position': position,
     };
   }
 }

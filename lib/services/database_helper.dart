@@ -38,13 +38,11 @@ class DatabaseHelper {
       onCreate: (db, version) async {
         //Create Note Table
         await db.execute('''CREATE TABLE $noteTable (
-          $columnId INTEGER PRIMARY KEY AUTOINCREMENT, 
-          $columnTitle TEXT NOT NULL,
-          $columnContent TEXT,
-          $columnDateCreated INTEGER,
-          $columnDateUpdated INTEGER,
-          $columnNoteType TEXT,
-          $columnPosition INTEGER
+          _id INTEGER PRIMARY KEY AUTOINCREMENT, 
+          title TEXT NOT NULL,
+          content TEXT,
+          created_at INTEGER,
+          updated_at INTEGER,
           )''');
 
         // Create File Table
@@ -68,6 +66,20 @@ class DatabaseHelper {
           updated_at INTEGER,
           FOREIGN KEY (file_id) REFERENCES file_table (_id) ON DELETE CASCADE
           )''');
+
+        //Create event table
+        await db.execute('''
+        CREATE TABLE event_table(
+        _id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        desc TEXT NOT NULL,
+        event_start INTEGER,
+        event_end INTEGER,
+        is_all_day INTEGER NOT NULL DEFAULT 0,
+        reminder_time INTEGER,
+        created_at INTEGER,
+        updated_at INTEGER
+        )''');
       },
       version: dbVersion,
       onOpen: (db) async {
