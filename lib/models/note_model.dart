@@ -38,7 +38,7 @@ class NoteModel {
       '_id': id,
       'title': title,
       'content': content,
-      'crated_at': createdAt == null ? DateTime.now().millisecondsSinceEpoch : createdAt?.millisecondsSinceEpoch,
+      'created_at': createdAt == null ? DateTime.now().millisecondsSinceEpoch : createdAt?.millisecondsSinceEpoch,
       'updated_at': updatedAt == null ? DateTime.now().millisecondsSinceEpoch : updatedAt?.millisecondsSinceEpoch,
       // 'note_type': noteType == NoteType.textNote ? 'Text Note' : noteType == NoteType.checklist ? 'Checklist' : 'Voice Note',
       // 'position': position,

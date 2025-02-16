@@ -1,86 +1,88 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:note_taking_app/data/dummy_data.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+// import 'package:note_taking_app/data/dummy_data.dart';
+import 'package:note_taking_app/providers/note_provider.dart';
 
-class AllListData extends StatelessWidget {
+class AllListData extends ConsumerWidget {
   const AllListData({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final dummyData = DummyData();
+  Widget build(BuildContext context, WidgetRef ref) {
+    // final dummyData = DummyData();
+    final notesState = ref.watch(notesProvider);
 
-    return Expanded(
-      // height: MediaQuery.of(context).size.height * 1/1.804,
-      child: GridView.builder(
-        padding: EdgeInsets.only(bottom: 80.0), 
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 200, // Maksimal lebar tiap item
-          // mainAxisExtent: randomHeight, // Maksimal lebar tiap item
-          crossAxisSpacing: 0.0,
-          mainAxisSpacing: 0.0,
-          childAspectRatio: 0.9,
-        ),
-        itemCount: dummyData.dummyNotes.length,
-        itemBuilder: (context, index) {
-          // final double randomOverflow = Random().nextInt(7) + 4;
-          
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              // height: randomHeight,
-              padding: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withValues(alpha: 0.3),
-                    spreadRadius: 2,
-                    blurRadius: 7,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                // mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    // color: Colors.yellow,
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      dummyData.dummyNotes[index].title,
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 10.0,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 4.0),
-                  Expanded(
-                    child: Container(
-                      // color: Colors.blue,
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        dummyData.dummyNotes[index].content,
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 8.0,
-                          fontWeight: FontWeight.w400,
+    return notesState.when(
+      data: (notes) => notes.isEmpty
+          ? Center(child: Text("Belum ada catatan"))
+          : Expanded(
+              child: GridView.builder(
+                padding: EdgeInsets.only(bottom: 80.0),
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 200,
+                  crossAxisSpacing: 0.0,
+                  mainAxisSpacing: 0.0,
+                  childAspectRatio: 0.9,
+                ),
+                itemCount: notes.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () => context.go('/new_note_page', extra: notes[index]),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        padding: EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withValues(alpha: 0.3),
+                              spreadRadius: 2,
+                              blurRadius: 7,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
                         ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 10,
+                        child: Column(
+                          children: [
+                            Container(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                notes[index].title,
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 10.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 4.0),
+                            Expanded(
+                              child: Container(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  notes[index].content,
+                                  style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontSize: 8.0,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 10,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  );
+                },
               ),
             ),
-          );
-        },
-      ),
+      loading: () => Center(child: CircularProgressIndicator()),
+      error: (error, stack) => Center(child: Text("Terjadi kesalahan")),
     );
   }
 }

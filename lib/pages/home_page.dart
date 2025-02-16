@@ -12,7 +12,7 @@ class HomePage extends ConsumerWidget {
     final quoteAsyncValue = ref.watch(quoteProvider);
 
     return Scaffold(
-      backgroundColor: Color(0xFFf2f3f7),
+      backgroundColor: Color(0xFFF4F4F4),
       appBar: AppBar(
         title: Text(
           'ProdNote',
