@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:note_taking_app/data/dummy_data.dart';
 import 'package:note_taking_app/providers/calendar_provider.dart';
+import 'package:note_taking_app/screens/add_event_screen.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarPage extends ConsumerWidget {
@@ -66,7 +68,10 @@ class CalendarPage extends ConsumerWidget {
                 Flexible(
                   child: TextButton(
                     onPressed: () {
-                      // Aksi simpan catatan
+                      showCupertinoDialog(
+                        context: context,
+                        builder: (context) => AddEventScreen(),
+                      );
                     }, // Warna ikon agak gelap
                     style: TextButton.styleFrom(
                       backgroundColor:

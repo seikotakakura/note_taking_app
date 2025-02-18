@@ -49,9 +49,9 @@ class NotesNotifier extends AsyncNotifier<List<NoteModel>> {
 
       if (result > 0) {
         state = AsyncValue.data(await fetchNotes());
-        return Result.success("Note berhasil diupdate");
+        return Result.success("Note berhasil diubah");
       } else {
-        return Result.error("Gagal mengupdate note");
+        return Result.error("Gagal mengubah note");
       }
     } catch (e) {
       log("Error: ${e.toString()}");
